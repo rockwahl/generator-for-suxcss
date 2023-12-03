@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0c1326;
+            color: #b3b3b3;
+        }
+
+        #workout-generator {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: #162246;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #workout-generator h2 {
+            color: #20d1fd;
+        }
+
+        #workout-generator label, #workout-generator select, #workout-generator button {
+            margin: 10px 0;
+            display: block;
+        }
+
+        button {
+            background-color: #20d1fd;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #17a7c9;
+        }
+
+        #workout-display {
+            margin-top: 20px;
+            background-color: #0c1326;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .exercise {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #20335a;
+            border-radius: 5px;
+        }
+
+        .exercise h3 {
+            color: #4fd5e6;
+            margin: 0;
+        }
+
+        .exercise p {
+            margin: 5px 0;
+            color: #a3a3a3;
+        }
+    </style>
+</head>
+<body>
+    <div id="workout-generator">
+        <h2>Plyometric Jump Workout Generator</h2>
+        <label for="user-level">Select your experience level:</label>
+        <select id="user-level">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+        <button id="generate-workout">Generate Workout</button>
+        <div id="workout-display"></div>
+    </div>
+   
+<script>
+    const exercises = {
+        beginner: [
+            {
+                Number: 1,
+                Name: 'Standard Box Jump',
+                'Difficulty Level': 'Beginner',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Plyometric box',
+                Instructions: 'Stand in front of the box, drop into a deep squat, and jump straight up onto the box.',
+                'Safety Tips': 'Ensure a stable landing surface; avoid overshooting the jump.'
+            },
+            {
+                Number: 9,
+                Name: 'Drop from Box and Land on Ground (Force Absorption)',
+                'Difficulty Level': 'Beginner',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Hamstrings',
+                'Equipment Needed': 'Box',
+                Instructions: 'Stand on a box, step off, and focus on absorbing the impact with a controlled landing.',
+                'Safety Tips': 'Start with a low height; focus on soft landings.'
+            }
+        ],
+        intermediate: [
+            {
+                Number: 2,
+                Name: 'Standard Box Jump with Hold at Bottom',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Plyometric box',
+                Instructions: 'Perform a standard box jump but hold a deep squat for 3 seconds before jumping.',
+                'Safety Tips': 'Maintain form during the squat; ensure controlled movements.'
+            },
+            {
+                Number: 5,
+                Name: 'Fast Box Jumps (Low Box)',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Hamstrings',
+                'Equipment Needed': 'Low box (under 7 inches)',
+                Instructions: 'Focus on rapid jumps onto a lower box, minimizing ground contact time.',
+                'Safety Tips': 'Ensure the box is stable and avoid rushing to prevent missteps.'
+            },
+            {
+                Number: 6,
+                Name: '3-Step 2-Foot Box Jump',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Plyometric box',
+                Instructions: 'Take one step and then leap onto the box with both feet.',
+                'Safety Tips': 'Ensure a clear path and stable landing.'
+            },
+    
+            {
+                Number: 7,
+                Name: '4-Step 2-Foot Box Jump',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Plyometric box',
+                Instructions: 'Take a four-step approach before jumping onto the box with both feet.',
+                'Safety Tips': 'Keep the approach controlled; avoid overstriding.'
+            },
+            {
+                Number: 8,
+                Name: 'Sitting on Box into Jump onto Box',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Two boxes (one to sit, one to jump)',
+                Instructions: 'Start by sitting on a lower box, then explode up to jump onto a higher box.',
+                'Safety Tips': 'Ensure both boxes are stable; start with a lower height.'
+            },
+            {
+                Number: 10,
+                Name: 'Drop Box Jump',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Two boxes (one lower, one higher)',
+                Instructions: 'Drop off a lower box and immediately jump onto a higher box.',
+                'Safety Tips': 'Ensure the landing area on both boxes is clear and stable.'
+            }, 
+            {
+                Number: 13,
+                Name: 'Left-Right-Left Skater Jumps onto Box',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Lateral muscles',
+                'Equipment Needed': 'Plyometric box',
+                Instructions: 'Perform lateral skater jumps (left-right-left) onto the box.',
+                'Safety Tips': 'Focus on lateral movement control; ensure the box is stable.'
+            },
+            {
+                Number: 14,
+                Name: 'Right-Left-Right Skater Jumps onto Box',
+                'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Lateral muscles',
+                'Equipment Needed': 'Plyometric box',
+                Instructions: 'Perform lateral skater jumps (right-left-right) onto the box.',
+                'Safety Tips': 'Focus on lateral movement control; ensure the box is stable.'
+            },
+            {
+                Number: 15,
+                Name: 'Broad Jump to Vertical Jump onto Box', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Plyometric boxes of varying heights',
+                Instructions: 'Perform a broad jump followed immediately by a vertical jump onto the box.',
+                'Safety Tips': 'Focus on the transition between jumps; start with a lower box.'
+            },
+            {
+                Number: 16,
+                Name: 'Side Shuffle to Vertical Jump onto Box', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Plyometric boxes of varying heights',
+                Instructions: 'Perform a side shuffle and transition into a vertical jump onto the box.',
+                'Safety Tips': 'Keep the shuffle controlled; ensure clear space for movement.'
+            },
+            {
+                Number: 17,
+                Name: 'Hurdle Jumps over Box or Hurdle', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Hurdles or Plyometric boxes of varying heights',
+                Instructions: 'Perform a series of jumps over hurdles or boxes, adjusting the height.',
+                'Safety Tips': 'Ensure hurdles/boxes are stable; focus on form over height.'
+            },
+            {
+                Number: 18,
+                Name: 'Lateral Box Jumps', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Hurdles or Plyometric boxes of varying heights',
+                Instructions: 'Stand to the side of the box. Jump sideways onto the box, landing with both feet, then jump back down to the starting side or alternate sides.',
+                'Safety Tips': 'Ensure stable landing and take care not to twist ankles on landing.'
+            },
+            {
+                Number: 19,
+                Name: 'Box Jump with Rotation', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Hurdles or Plyometric boxes of varying heights',
+                Instructions: 'Perform a standard box jump but add a 90° or 180° rotation mid-air before landing on the box.',
+                'Safety Tips': 'Start with smaller rotations and ensure a clear area for jumping.'
+            },
+            {
+                Number: 22,
+                Name: 'Box Jump Overs', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Hurdles or Plyometric boxes of varying heights',
+                Instructions: 'Instead of landing on the box, jump completely over it, landing on the other side, then immediately turn and jump back.',
+                'Safety Tips': 'Ensure enough space for landing and avoid tripping over the box.'
+            },
+            {
+                Number: 23,
+                Name: 'Tuck Jump to Box Jump', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Hurdles or Plyometric boxes of varying heights',
+                Instructions: 'Perform a tuck jump (knees to chest), land, and then immediately jump onto the box.',
+                'Safety Tips': 'Focus on landing softly and maintaining balance.'
+            },
+            {
+                Number: 25,
+                Name: 'Staggered Box Jumps', 'Difficulty Level': 'Intermediate',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Hurdles or Plyometric boxes of varying heights',
+                Instructions: 'Set up boxes in a staggered formation and jump from one to the next in sequence.',
+                'Safety Tips': 'Ensure boxes are stable and spaced appropriately.'
+            },
+            
+    
+        ],
+        advanced: [
+            {
+                Number: 3,
+                Name: 'One-Legged Standard Box Jump',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Plyometric Box',
+                Instructions: 'Perform a standard box jump but using only one leg.',
+                'Safety Tips': 'Start with a lower box to prevent imbalance and injury.'
+            },
+            {
+                Number: 4,
+                Name: 'One-Legged Hold At Bottom Box Jump (or pistol squat box jump)',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Plyometric Box',
+                Instructions: 'Similar to the one-legged standard box jump, but hold the squat position on one leg before jumping.',
+                'Safety Tips': 'Use a lower box initially and focus on maintaining balance.'
+            },
+            {
+                Number: 11,
+                Name: 'Drop Box Jump with One Leg',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Two boxes (one very low, one higher)',
+                Instructions: 'Drop off a very low box with one leg and immediately jump onto a higher box.',
+                'Safety Tips': 'Begin with minimal height difference; focus on balance.'
+            },
+            {
+                Number: 12,
+                Name: 'Drop Box Jump with One Leg',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Two boxes (one very low, one higher)',
+                Instructions: 'Approach the box at a run and jump onto it with one foot.',
+                'Safety Tips': 'Start with a lower box; ensure a steady approach.'
+            },
+            {
+                Number: 20,
+                Name: 'Drop Box Jump with One Leg',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Two boxes (one low, one higher)',
+                Instructions: 'Step off a lower box, land briefly on the ground, and then immediately jump onto a higher box.',
+                'Safety Tips': 'Focus on minimizing ground contact time and ensure stable boxes.'
+            },
+            {
+                Number: 21,
+                Name: 'Single Leg Lateral Box Jumps',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Plyometric Box',
+                Instructions: 'Perform lateral box jumps but using only one leg at a time.',
+                'Safety Tips': 'Begin with a low height and focus on balance and controlled landings.'
+            },
+            {
+                Number: 24,
+                Name: 'Burpee to Box Jump',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes, Core',
+                'Equipment Needed': 'Plyometric Box',
+                Instructions: 'Perform a burpee in front of the box, then jump onto the box as part of the upward movement.',
+                'Safety Tips': 'Ensure controlled movement during the burpee and a stable landing on the box.'
+            },
+            {
+                Number: 26,
+                Name: 'Double Box Jump (One after Another)',
+                'Difficulty Level': 'Advanced',
+                'Primary Muscle Groups': 'Quadriceps, Calves, Glutes',
+                'Equipment Needed': 'Two boxes',
+                Instructions: 'Jump onto the first box, then immediately drop and jump onto the second box.',
+                'Safety Tips': 'Ensure both boxes are stable and spaced appropriately.'
+            },
+        ]
+    };
+    
+    function getRandomExercises(level) {
+        let selectedExercises = [];
+    
+        if (level === "beginner") {
+            selectedExercises.push(...selectRandom(exercises.beginner, 2));
+            selectedExercises.push(...selectRandom(exercises.intermediate, 2));
+        } else if (level === "intermediate") {
+            selectedExercises.push(...selectRandom(exercises.intermediate, 3));
+            selectedExercises.push(...selectRandom(exercises.advanced, 1));
+        } else if (level === "advanced") {
+            selectedExercises.push(...selectRandom(exercises.advanced, 2));
+            selectedExercises.push(...selectRandom(exercises.intermediate, 1));
+            selectedExercises.push(...selectRandom(exercises.beginner, 1));
+        }
+    
+        return selectedExercises;
+    }
+    
+    function selectRandom(array, num) {
+        let results = [];
+        let shuffled = array.sort(() => 0.5 - Math.random());
+        results = shuffled.slice(0, num);
+        return results;
+    }
+    
+    function displayWorkout(workout) {
+        let displayDiv = document.getElementById("workout-display");
+        displayDiv.innerHTML = ""; // Clear previous results
+        workout.forEach(exercise => {
+            let exerciseDiv = document.createElement("div");
+            exerciseDiv.className = "exercise";
+    
+            let title = document.createElement("h3");
+            title.innerText = exercise.Name + " - " + exercise["Difficulty Level"];
+            exerciseDiv.appendChild(title);
+    
+            let instruction = document.createElement("p");
+            instruction.innerText = "Instructions: " + exercise.Instructions;
+            exerciseDiv.appendChild(instruction);
+    
+            displayDiv.appendChild(exerciseDiv);
+        });
+    }
+    
+    document.getElementById("generate-workout").addEventListener("click", function() {
+        let userLevel = document.getElementById("user-level").value;
+        let workout = getRandomExercises(userLevel);
+        displayWorkout(workout);
+    });
+    
+    </script>
+</body>
+</html>
